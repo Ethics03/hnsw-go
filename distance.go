@@ -2,12 +2,12 @@ package hnsw
 
 import "math"
 
-func CosineDistance(a, b []float64) float64 {
+func CosineDistance(a, b []float32) float32 {
 	Normalize(a)
 	Normalize(b)
-	var dot, normA, normB float64
+	var dot, normA, normB float32
 
-	for i := 0; i < len(a); i++ {
+	for i := range len(a) {
 		dot += a[i] * b[i]
 		normA += a[i] * a[i]
 		normB += b[i] * b[i]
@@ -17,7 +17,7 @@ func CosineDistance(a, b []float64) float64 {
 		return 1.0 // max distance if vector empty
 	}
 
-	similarity := dot / (math.Sqrt(normA) * math.Sqrt(normB))
+	similarity := dot / (float32(math.Sqrt(float64(normA))) * float32(math.Sqrt(float64(normB))))
 
 	if similarity > 1 {
 		similarity = 1
