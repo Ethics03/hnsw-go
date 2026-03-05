@@ -2,8 +2,7 @@ package hnsw
 
 import "math"
 
-// normalizing for faster cosineDistance
-func Normalize(vec []float32) {
+func Normalize(vec []float32) []float32 {
 	var norm float32
 
 	for _, x := range vec {
@@ -13,10 +12,14 @@ func Normalize(vec []float32) {
 	norm = float32(math.Sqrt(float64(norm)))
 
 	if norm == 0 {
-		return
+		result := make([]float32, len(vec))
+		copy(result, vec)
+		return result
 	}
 
+	result := make([]float32, len(vec))
 	for i := range vec {
-		vec[i] /= norm
+		result[i] = vec[i] / norm
 	}
+	return result
 }
